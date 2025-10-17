@@ -1,0 +1,16 @@
+services:
+  ctf:
+    hostname: phoenixctf
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CUID: "${CUID}"
+        CGID: "${CGID}"
+        SUID: "${SUID}"
+        SGID: "${SGID}"
+    privileged: true
+    ports:
+      - "2222:22"
+    volumes:
+      - ./data:/home/user/ctf
