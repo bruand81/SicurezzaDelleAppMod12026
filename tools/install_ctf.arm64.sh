@@ -1,4 +1,4 @@
-set -e
+# set -e
 
 # Generic
 apt -y autoremove

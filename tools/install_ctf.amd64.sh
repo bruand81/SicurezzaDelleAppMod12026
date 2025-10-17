@@ -1,10 +1,11 @@
-set -e
+# set -e
 
 # Generic
-apt -y autoremove
-apt -y install wget
+apt-get update
+apt-get -y upgrade
+apt-get -y install wget
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
-DEBIAN_FRONTEND=noninteractive apt install -y curl php python3 python3-pip git binwalk gimp wireshark tshark ht ltrace gdb patchelf elfutils ruby-dev libssl-dev
+DEBIAN_FRONTEND=noninteractive apt-get install -y curl php python3 python3-pip git binwalk gimp wireshark tshark ht ltrace gdb patchelf elfutils ruby-dev libssl-dev
 python3 -m pip install pyshark pwntools ropper pycryptodome mtp --break-system-packages
 gem install one_gadget seccomp-tools
 mkdir -p $HOME/tools
@@ -17,14 +18,14 @@ rm /opt/jdk-25_linux-x64_bin.deb
 
 
 # Install Visual Studio Code
-apt -y install gpg
+apt-get -y install gpg
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |tee /etc/apt/sources.list.d/vscode.list > /dev/null
 rm -f packages.microsoft.gpg
-apt install apt-transport-https
-apt update
-apt install code
+apt-get install apt-transport-https
+apt-get update
+apt-get install code
 
 
 # Install Ngrok
@@ -32,8 +33,8 @@ curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
   | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
   && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
   | tee /etc/apt/sources.list.d/ngrok.list \
-  && apt update \
-  && apt install ngrok
+  && apt-get update \
+  && apt-get install ngrok
 
 
 # Install ca-certificates

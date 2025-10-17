@@ -1,29 +1,37 @@
 FROM debian:trixie AS ctf_ssh
 
-RUN apt update && apt upgrade -y
+USER root
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt -y install openssh-server neovim sudo
 
 COPY tools/install_ssh.sh /root/install_ssh.sh
 
-RUN /bin/sh /root/install_ssh.sh && rm /root/install_ssh.sh
+RUN /bin/bash /root/install_ssh.sh && rm /root/install_ssh.sh
 
 FROM ctf_ssh AS ctf_tools
 
-ARG TARGETARCH
+ARG TARGETARCH=amd64
+
+USER root
 
 COPY tools/install_ctf.amd64.sh /root/install_ctf.amd64.sh
 COPY tools/install_ctf.arm64.sh /root/install_ctf.arm64.sh
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        /bin/sh /root/install_ctf.amd64.sh && rm /root/install_ctf.*.sh; \
+        /bin/bash /root/install_ctf.amd64.sh && rm /root/install_ctf.*.sh; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-        /bin/sh /root/install_ctf.arm64.sh && rm /root/install_ctf.*.sh; \
+        /bin/bash /root/install_ctf.arm64.sh && rm /root/install_ctf.*.sh; \
     else \
         echo "Unsupported architecture: $TARGETARCH" && exit 1; \
     fi
 
 FROM ctf_tools AS ctf_phoenix
 
-ARG TARGETARCH
+ARG TARGETARCH=amd64
+
+USER root
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0-_amd64.deb -O /root/phoenix.deb; \
@@ -51,6 +59,8 @@ ENV NAME=toor
 ENV PASS=toor
 ENV SNAME=user
 ENV SPASS=user
+
+USER root
 
 RUN groupadd -g ${CGID} ${NAME}
 RUN groupadd -g ${SGID} ${SNAME}

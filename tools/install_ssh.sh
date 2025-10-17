@@ -1,4 +1,3 @@
-apt -y install openssh-server neovim sudo
 mkdir /var/run/sshd
 
 service ssh start
@@ -11,4 +10,5 @@ RUNLEVEL=1 dpkg-reconfigure openssh-server
 ssh-keygen -A -v
 update-rc.d ssh defaults
 
-sed -i 's/^%sudo.*$/%sudo ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers
+# Metodo più sicuro con visudo
+echo '%sudo ALL=(ALL:ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
