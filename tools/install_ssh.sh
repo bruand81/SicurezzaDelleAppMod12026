@@ -1,4 +1,4 @@
-apt install openssh-server neovim sudo -y
+apt -y install openssh-server neovim sudo
 mkdir /var/run/sshd
 
 service ssh start

@@ -1,8 +1,8 @@
 set -e
 
 # Generic
-apt autoremove -y
-apt-get install wget -y
+apt -y autoremove
+apt -y install wget
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
 DEBIAN_FRONTEND=noninteractive apt install -y curl php python3 python3-pip git binwalk gimp wireshark tshark ht ltrace gdb patchelf elfutils ruby-dev libssl-dev
 python3 -m pip install pyshark pwntools ropper pycryptodome mtp --break-system-packages
@@ -17,7 +17,7 @@ rm /opt/jdk-25_linux-x64_bin.deb
 
 
 # Install Visual Studio Code
-apt-get install gpg -y
+apt -y install gpg
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |tee /etc/apt/sources.list.d/vscode.list > /dev/null

@@ -2,7 +2,7 @@ FROM debian:trixie AS ctf_ssh
 
 RUN apt update && apt upgrade -y
 
-COPY ./tools/install_ssh.sh /root/install_ssh.sh
+COPY tools/install_ssh.sh /root/install_ssh.sh
 
 RUN /bin/sh /root/install_ssh.sh && rm /root/install_ssh.sh
 
@@ -10,8 +10,8 @@ FROM ctf_ssh AS ctf_tools
 
 ARG TARGETARCH
 
-COPY ./tools/install_ctf.amd64.sh /root/install_ctf.amd64.sh
-COPY ./tools/install_ctf.arm64.sh /root/install_ctf.arm64.sh
+COPY tools/install_ctf.amd64.sh /root/install_ctf.amd64.sh
+COPY tools/install_ctf.arm64.sh /root/install_ctf.arm64.sh
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         /bin/sh /root/install_ctf.amd64.sh && rm /root/install_ctf.*.sh; \
