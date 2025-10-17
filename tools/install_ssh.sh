@@ -1,0 +1,14 @@
+apt install openssh-server neovim sudo -y
+mkdir /var/run/sshd
+
+service ssh start
+sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+bash -c 'install -m755 <(printf "#!/bin/sh\nexit 0") /usr/sbin/policy-rc.d'
+# Con sed
+sed -i 's/^#ListenAddress/ListenAddress/g' /etc/ssh/sshd_config
+sed -i 's/^#\(HostKey .*ssh_host_.*_key\)/\1/g' /etc/ssh/sshd_config
+RUNLEVEL=1 dpkg-reconfigure openssh-server
+ssh-keygen -A -v
+update-rc.d ssh defaults
+
+sed -i 's/^%sudo.*$/%sudo ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers
