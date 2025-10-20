@@ -37,18 +37,27 @@ RUN wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-al
 
 RUN wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0_arm64.deb -O /root/phoenix_arm64.deb;
 
+COPY tools/postinst_amd64.sh /root/postinst_amd64.sh
+COPY tools/postinst_arm64.sh /root/postinst_arm64.sh
+
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         cp /root/phoenix_amd64.deb /root/phoenix.deb; \
         cp /root/phoenix_arm64.deb /root/phoenix_oth.deb; \
+        cp /root/postinst_arm64.sh /root/postinst.sh; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
         cp /root/phoenix_arm64.deb /root/phoenix.deb; \
         cp /root/phoenix_amd64.deb /root/phoenix_oth.deb; \
+        cp /root/postinst_amd64.sh /root/postinst.sh; \
     else \
         echo "Unsupported architecture: $TARGETARCH" && exit 1; \
     fi
 
-RUN dpkg --force-architecture --force-depends -i /root/phoenix_oth.deb && rm /root/phoenix_oth.deb
 RUN dpkg -i /root/phoenix.deb && rm /root/phoenix.deb
+RUN dpkg-deb -R /root/phoenix_oth.deb /root/tmp/
+RUN cp -R /root/tmp/opt/phoenix/* /opt/phoenix/
+RUN rm -rf /root/tmp/
+RUN rm /root/phoenix_oth.deb
+RUN rm /root/postinst*
 
 RUN apt autoremove -y
 
