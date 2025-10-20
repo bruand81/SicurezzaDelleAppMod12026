@@ -18,5 +18,7 @@ services:
       - roothome:/root
 volumes:
   homes:
-
+    driver: local
+    
   roothome:
+    driver: local
