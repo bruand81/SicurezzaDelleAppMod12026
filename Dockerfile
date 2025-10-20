@@ -19,6 +19,9 @@ USER root
 COPY tools/install_ctf.amd64.sh /root/install_ctf.amd64.sh
 COPY tools/install_ctf.arm64.sh /root/install_ctf.arm64.sh
 
+RUN mkdir /opt/ctf_tools
+RUN chmod 755 /opt/ctf_tools
+
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         /bin/bash /root/install_ctf.amd64.sh && rm /root/install_ctf.*.sh; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
@@ -41,12 +44,12 @@ COPY tools/postinst_amd64.sh /root/postinst_amd64.sh
 COPY tools/postinst_arm64.sh /root/postinst_arm64.sh
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        cp /root/phoenix_amd64.deb /root/phoenix.deb; \
-        cp /root/phoenix_arm64.deb /root/phoenix_oth.deb; \
+        mv /root/phoenix_amd64.deb /root/phoenix.deb; \
+        mv /root/phoenix_arm64.deb /root/phoenix_oth.deb; \
         cp /root/postinst_arm64.sh /root/postinst.sh; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-        cp /root/phoenix_arm64.deb /root/phoenix.deb; \
-        cp /root/phoenix_amd64.deb /root/phoenix_oth.deb; \
+        mv /root/phoenix_arm64.deb /root/phoenix.deb; \
+        mv /root/phoenix_amd64.deb /root/phoenix_oth.deb; \
         cp /root/postinst_amd64.sh /root/postinst.sh; \
     else \
         echo "Unsupported architecture: $TARGETARCH" && exit 1; \

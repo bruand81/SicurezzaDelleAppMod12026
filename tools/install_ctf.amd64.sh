@@ -8,7 +8,7 @@ echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-s
 DEBIAN_FRONTEND=noninteractive apt-get install -y curl php python3 python3-pip git binwalk gimp wireshark tshark ht ltrace gdb patchelf elfutils ruby-dev libssl-dev
 python3 -m pip install pyshark pwntools ropper pycryptodome mtp --break-system-packages
 gem install one_gadget seccomp-tools
-mkdir -p $HOME/tools
+mkdir -p /opt/ctf_tools
 
 
 # Install JDK 25
@@ -44,30 +44,30 @@ install -m 0755 -d /etc/apt/keyrings
 
 
 # Install JohnTheRipper
-git clone https://github.com/openwall/john -b bleeding-jumbo $HOME/tools/john
-(cd $HOME/tools/john/src && ./configure && make -s clean && make -sj5)
+git clone https://github.com/openwall/john -b bleeding-jumbo /opt/ctf_tools/john
+(cd /opt/ctf_tools/john/src && ./configure && make -s clean && make -sj5)
 
 # Install Postman
-wget -O $HOME/tools/postman.tar.gz https://dl.pstmn.io/download/latest/linux_64
-(cd $HOME/tools && tar -xf postman.tar.gz)
-rm $HOME/tools/postman.tar.gz
+wget -O /opt/ctf_tools/postman.tar.gz https://dl.pstmn.io/download/latest/linux_64
+(cd /opt/ctf_tools && tar -xf postman.tar.gz)
+rm /opt/ctf_tools/postman.tar.gz
 
 
 # Install pwndbg
-git clone https://github.com/pwndbg/pwndbg $HOME/tools/pwndbg
-(cd $HOME/tools/pwndbg && ./setup.sh)
+git clone https://github.com/pwndbg/pwndbg /opt/ctf_tools/pwndbg
+(cd /opt/ctf_tools/pwndbg && ./setup.sh)
 
 
 # Install Ghidra
-wget -O $HOME/tools/ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.2.1_build/ghidra_11.2.1_PUBLIC_20241105.zip
-(cd $HOME/tools && unzip ghidra.zip)
-rm $HOME/tools/ghidra.zip
+wget -O /opt/ctf_tools/ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.2.1_build/ghidra_11.2.1_PUBLIC_20241105.zip
+(cd /opt/ctf_tools && unzip ghidra.zip)
+rm /opt/ctf_tools/ghidra.zip
 
 
 # Install Binary Ninja
-wget -O $HOME/tools/binaryninja.zip https://cdn.binary.ninja/installers/binaryninja_free_linux.zip
-(cd $HOME/tools && unzip binaryninja.zip)
-rm $HOME/tools/binaryninja.zip
+wget -O /opt/ctf_tools/binaryninja.zip https://cdn.binary.ninja/installers/binaryninja_free_linux.zip
+(cd /opt/ctf_tools && unzip binaryninja.zip)
+rm /opt/ctf_tools/binaryninja.zip
 
 # Fix capstone
 python3 -m pip install capstone==5.0.3 --break-system-packages
