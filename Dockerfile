@@ -33,14 +33,21 @@ ARG TARGETARCH=amd64
 
 USER root
 
+RUN wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0-_amd64.deb -O /root/phoenix_amd64.deb;
+
+RUN wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0_arm64.deb -O /root/phoenix_arm64.deb;
+
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0-_amd64.deb -O /root/phoenix.deb; \
+        cp /root/phoenix_amd64.deb /root/phoenix.deb; \
+        cp /root/phoenix_arm64.deb /root/phoenix_oth.deb; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-        wget https://github.com/ExploitEducation/Phoenix/releases/download/v1.0.0-alpha-3/exploit-education-phoenix_1.0.0_arm64.deb -O /root/phoenix.deb; \
+        cp /root/phoenix_arm64.deb /root/phoenix.deb; \
+        cp /root/phoenix_amd64.deb /root/phoenix_oth.deb; \
     else \
         echo "Unsupported architecture: $TARGETARCH" && exit 1; \
     fi
 
+RUN dpkg --force-architecture --force-depends -i /root/phoenix_oth.deb && rm /root/phoenix_oth.deb
 RUN dpkg -i /root/phoenix.deb && rm /root/phoenix.deb
 
 RUN apt autoremove -y
