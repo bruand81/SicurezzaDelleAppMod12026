@@ -15,5 +15,8 @@ services:
     volumes:
       - homes:/home
       - ./data:/home/user/ctf
+      - roothome:/root
 volumes:
   homes:
+
+  roothome:
