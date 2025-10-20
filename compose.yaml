@@ -13,4 +13,7 @@ services:
     ports:
       - "2222:22"
     volumes:
+      - homes:/home
       - ./data:/home/user/ctf
+volumes:
+  homes:

@@ -1,0 +1,2 @@
+deb [signed-by=/usr/share/keyrings/ppa-deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu/ trusty main 
+deb-src [signed-by=/usr/share/keyrings/ppa-deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu/ trusty main
