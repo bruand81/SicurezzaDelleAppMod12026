@@ -15,10 +15,6 @@ services:
     volumes:
       - homes:/home
       - ./data:/home/user/ctf
-      - roothome:/root
 volumes:
   homes:
-    driver: local
-    
-  roothome:
     driver: local
