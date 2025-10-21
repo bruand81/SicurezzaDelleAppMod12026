@@ -114,6 +114,10 @@ EXPOSE 22
 
 COPY tools/entrypoint.sh /root/entrypoint.sh
 
+RUN echo 'root' | passwd --stdin root
+
+RUN chmod +x /root/entrypoint.sh
+
 ENTRYPOINT ["/root/entrypoint.sh"]
 
-# CMD ["/usr/sbin/sshd", "-D"]
+# CMD ["/usr/sbin/sshd", "-D"]
