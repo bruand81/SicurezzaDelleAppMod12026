@@ -8,6 +8,9 @@ RUN apt -y install openssh-server neovim sudo
 
 COPY tools/install_ssh.sh /root/install_ssh.sh
 
+RUN echo 'LANG=en_US.UTF-8' >> /etc/environment
+RUN echo 'LC_ALL=en_US.UTF-8' >> /etc/environment
+
 RUN /bin/bash /root/install_ssh.sh && rm /root/install_ssh.sh
 
 FROM ctf_ssh AS ctf_tools
@@ -68,7 +71,9 @@ FROM ctf_phoenix AS ctf_python
 
 USER root
 
-RUN apt install -y python-is-python3
+#RUN apt install -y python-is-python3
+COPY tools/install_python2.sh /root/install_python2.sh
+RUN /bin/bash /root/install_python2.sh && rm /root/install_python2.sh
 
 FROM ctf_phoenix AS ctf_final
 

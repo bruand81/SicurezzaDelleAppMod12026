@@ -1,12 +1,9 @@
 services:
   ctf:
     hostname: phoenixctf
-    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
-      platforms:
-        - linux/amd64
       args:
         CUID: "${CUID}"
         CGID: "${CGID}"

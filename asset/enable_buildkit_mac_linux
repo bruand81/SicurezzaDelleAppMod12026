@@ -1,0 +1,8 @@
+# Aggiungi queste linee in .bashrc o .zshrc
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# Per applicare le modifiche, esegui:
+# source ~/.bashrc
+# oppure
+# source ~/.zshrc
