@@ -114,6 +114,8 @@ RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 # Reset user to root
 USER root
 
+RUN sed -i 's/\\u27a4 />/g' /etc/gdb/gef.py
+
 RUN apt install -y manpages-dev
 
 COPY tools/01-disable-aslr.conf /etc/sysctl.d/01-disable-aslr.conf
