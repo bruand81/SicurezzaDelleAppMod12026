@@ -75,7 +75,7 @@ USER root
 COPY tools/install_python2.sh /root/install_python2.sh
 RUN /bin/bash /root/install_python2.sh && rm /root/install_python2.sh
 
-FROM ctf_phoenix AS ctf_final
+FROM ctf_python AS ctf_final
 
 ARG CUID=1001
 ARG CGID=1001
