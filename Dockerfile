@@ -105,17 +105,25 @@ RUN chown -R ${SNAME}:${SNAME} /home/${SNAME}/ctf
 RUN mkdir /opt/phoenix-src/
 COPY src/* /opt/phoenix-src/
 RUN chmod 755 /opt/phoenix-src/
+
 USER ${NAME}
+
+RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 
 USER ${SNAME}
+
+RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 
 # Reset user to root
 USER root
 
-RUN sed -i 's/\\u27a4 />/g' /etc/gdb/gef.py
-
+# RUN sed -i 's/\\u27a4 />/g' /etc/gdb/gef.py
+RUN apt install -y locales
+RUN sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+RUN echo 'LANG=en_US.UTF-8' > /etc/default/locale
+RUN locale-gen
 
 RUN apt install -y manpages-dev
 
