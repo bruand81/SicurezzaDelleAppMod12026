@@ -19,6 +19,9 @@ ARG TARGETARCH=amd64
 
 USER root
 
+COPY tools/install_python2.sh /root/install_python2.sh
+RUN /bin/bash /root/install_python2.sh && rm /root/install_python2.sh
+
 COPY tools/install_ctf.amd64.sh /root/install_ctf.amd64.sh
 COPY tools/install_ctf.arm64.sh /root/install_ctf.arm64.sh
 
@@ -67,15 +70,7 @@ RUN rm /root/postinst*
 
 RUN apt autoremove -y
 
-FROM ctf_phoenix AS ctf_python
-
-USER root
-
-#RUN apt install -y python-is-python3
-COPY tools/install_python2.sh /root/install_python2.sh
-RUN /bin/bash /root/install_python2.sh && rm /root/install_python2.sh
-
-FROM ctf_python AS ctf_final
+FROM ctf_phoenix AS ctf_final
 
 ARG CUID=1001
 ARG CGID=1001
@@ -112,6 +107,8 @@ RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 
 # Reset user to root
 USER root
+
+RUN apt install -y manpages-dev
 
 COPY tools/01-disable-aslr.conf /etc/sysctl.d/01-disable-aslr.conf
 
