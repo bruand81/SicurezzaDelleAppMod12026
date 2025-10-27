@@ -103,7 +103,7 @@ RUN useradd -d /home/${NAME} -m -s /bin/bash -u ${CUID} -g ${CGID}  -G sudo,${SN
 RUN mkdir /home/${SNAME}/ctf
 RUN chown -R ${SNAME}:${SNAME} /home/${SNAME}/ctf
 RUN mkdir /opt/phoenix-src/
-COPY src/* /opt/phoenix-src/
+COPY src/Phoenix-src/* /opt/phoenix-src/
 RUN chmod 755 /opt/phoenix-src/
 
 USER ${NAME}
