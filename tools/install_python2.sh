@@ -1,4 +1,4 @@
-apt install -y libreadline-dev libbz2-dev libsqlite3-dev libssl-dev wget build-essential curl
+apt install -y libreadline-dev libbz2-dev libsqlite3-dev libssl-dev wget build-essential curl zlib1g-dev libssl-dev gdb
 wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz -O /tmp/Python-2.7.18.tgz
 cd /tmp
 tar zxf Python-2.7.18.tgz

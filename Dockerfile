@@ -68,6 +68,12 @@ RUN rm -rf /root/tmp/
 RUN rm /root/phoenix_oth.deb
 RUN rm /root/postinst*
 
+RUN python2 -m pip install --upgrade pwntools
+RUN apt update
+RUN apt install -y pipx
+RUN pipx ensurepath
+RUN pipx install pwntools
+
 RUN apt autoremove -y
 
 FROM ctf_phoenix AS ctf_final
@@ -91,7 +97,7 @@ RUN chown -R root:root /home/
 RUN chmod 755 /home/
 RUN groupadd -g ${CGID} ${NAME}
 RUN groupadd -g ${SGID} ${SNAME}
-RUN useradd -d /home/${SNAME} -m -s /bin/bash -u ${SUID} -g ${SGID} -p $(echo "$SPASS" | openssl passwd -1 -stdin) ${SNAME}
+RUN useradd -d /home/${SNAME} -m -s /bin/bash -u ${SUID} -g ${SGID} -G sudo -p $(echo "$SPASS" | openssl passwd -1 -stdin) ${SNAME}
 
 RUN useradd -d /home/${NAME} -m -s /bin/bash -u ${CUID} -g ${CGID}  -G sudo,${SNAME} -p $(echo "$PASS" | openssl passwd -1 -stdin) ${NAME}
 RUN mkdir /home/${SNAME}/ctf
