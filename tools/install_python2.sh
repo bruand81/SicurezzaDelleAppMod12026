@@ -4,7 +4,7 @@ cd /tmp
 tar zxf Python-2.7.18.tgz
 cd Python-2.7.18
 ./configure --prefix=/usr/local --enable-optimizations
-make
+make -j${PARALLEL_BUILDS}
 make install
 curl -O https://bootstrap.pypa.io/pip/2.7/get-pip.py
 python2 get-pip.py

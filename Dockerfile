@@ -1,5 +1,8 @@
 FROM debian:trixie AS ctf_ssh
 
+ARG PARALLEL_BUILDS=5
+ENV PARALLEL_BUILDS=${PARALLEL_BUILDS}
+
 USER root
 
 RUN apt update

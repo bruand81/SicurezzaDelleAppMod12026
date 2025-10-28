@@ -12,6 +12,7 @@ services:
         CGID: "${CGID}"
         SUID: "${SUID}"
         SGID: "${SGID}"
+        PARALLEL_BUILDS: "${PARALLEL_BUILDS}"
     privileged: true
     ports:
       - "2222:22"

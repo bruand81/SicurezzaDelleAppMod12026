@@ -45,7 +45,7 @@ install -m 0755 -d /etc/apt/keyrings
 
 # Install JohnTheRipper
 git clone https://github.com/openwall/john -b bleeding-jumbo /opt/ctf_tools/john
-(cd /opt/ctf_tools/john/src && ./configure && make -s clean && make -sj5)
+(cd /opt/ctf_tools/john/src && ./configure && make -s clean && make -sj${PARALLEL_BUILDS})
 
 # Install Postman
 wget -O /opt/ctf_tools/postman.tar.gz https://dl.pstmn.io/download/latest/linux_64
